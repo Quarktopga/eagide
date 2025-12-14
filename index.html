@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Eagide — Gestionnaire de mots de passe</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self'; img-src 'self'; font-src 'self';
+                 script-src 'self' 'strict-dynamic'; connect-src https://*.supabase.co 'self';
+                 frame-ancestors 'none'; base-uri 'none'; form-action 'self';">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Eagide</h1>
+    <nav id="authNav">
+      <button id="loginMicrosoft" class="brand ms">Se connecter avec Microsoft</button>
+      <button id="loginGoogle" class="brand google">Se connecter avec Google</button>
+      <button id="logout" class="link hidden">Se déconnecter</button>
+    </nav>
+  </header>
+
+  <main id="app" class="hidden">
+    <section id="unlock">
+      <h2>Déverrouiller le coffre</h2>
+      <p>Entrez votre phrase secrète Eagide. Elle n’est jamais envoyée au serveur.</p>
+      <input type="password" id="passphrase" placeholder="Phrase secrète" autocomplete="current-password" />
+      <button id="unlockBtn">Déverrouiller</button>
+      <button id="createVaultBtn" class="hidden">Créer le coffre</button>
+    </section>
+
+    <section id="vault" class="hidden">
+      <div class="toolbar">
+        <button id="newItem">Nouvel élément</button>
+        <input type="search" id="search" placeholder="Rechercher" />
+        <button id="quickLock">Verrouiller</button>
+      </div>
+
+      <div id="list"></div>
+      <div id="editor" class="panel hidden"></div>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
