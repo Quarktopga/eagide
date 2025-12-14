@@ -5,7 +5,7 @@ import { deriveMasterKey, wrapItemKey, unwrapItemKey, encryptItem, decryptItem }
 import { renderList, renderEditor } from './ui.js';
 import { totpNow } from './totp.js';
 
-const supabase = createClient('https://YOUR_PROJECT.supabase.co', 'PUBLIC_ANON_KEY');
+const supabase = createClient('https://nlnlyssdyxhrzfyrzxbm.supabase.co', 'sb_publishable_0_GAx_3WxLEVo9ctBuSCeA_lylUUc3M');
 
 const state = {
   session: null,
