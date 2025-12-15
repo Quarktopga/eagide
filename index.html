@@ -2,44 +2,82 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Eagide — Gestionnaire de mots de passe</title>
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- CSP stricte, adaptée à GitHub Pages + Supabase + jsdelivr ESM -->
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; style-src 'self'; img-src 'self'; font-src 'self';
-                 script-src 'self' 'strict-dynamic'; connect-src https://*.supabase.co 'self';
-                 frame-ancestors 'none'; base-uri 'none'; form-action 'self';">
+    content="
+      default-src 'self';
+      script-src 'self' https://cdn.jsdelivr.net 'strict-dynamic';
+      style-src 'self';
+      img-src 'self';
+      font-src 'self';
+      connect-src https://*.supabase.co 'self';
+      frame-ancestors 'none';
+      base-uri 'none';
+      form-action 'self';
+    ">
+  <meta name="referrer" content="no-referrer" />
 </head>
 <body>
   <header class="topbar">
-    <h1>Eagide</h1>
-    <nav id="authNav">
-      <button id="loginMicrosoft" class="brand ms">Se connecter avec Microsoft</button>
-      <button id="loginGoogle" class="brand google">Se connecter avec Google</button>
-      <button id="logout" class="link hidden">Se déconnecter</button>
+    <h1 class="brand">Eagide</h1>
+    <nav class="auth">
+      <button id="btn-google" class="btn brand google" aria-label="Se connecter avec Google">
+        Se connecter avec Google
+      </button>
+      <button id="btn-microsoft" class="btn brand ms" aria-label="Se connecter avec Microsoft">
+        Se connecter avec Microsoft
+      </button>
+      <button id="btn-logout" class="btn link hidden" aria-label="Se déconnecter">
+        Se déconnecter
+      </button>
     </nav>
   </header>
 
-  <main id="app" class="hidden">
-    <section id="unlock">
-      <h2>Déverrouiller le coffre</h2>
-      <p>Entrez votre phrase secrète Eagide. Elle n’est jamais envoyée au serveur.</p>
-      <input type="password" id="passphrase" placeholder="Phrase secrète" autocomplete="current-password" />
-      <button id="unlockBtn">Déverrouiller</button>
-      <button id="createVaultBtn" class="hidden">Créer le coffre</button>
+  <main class="container">
+    <section id="status" class="status"></section>
+
+    <section id="welcome" class="panel">
+      <h2>Connexion requise</h2>
+      <p>Choisissez un fournisseur pour vous connecter. Aucune création de compte local. Aucune donnée en clair n’est stockée côté serveur.</p>
+      <p class="muted">Hébergeur: GitHub Pages · Back-end: Supabase · Cookies: aucun · Données personnelles: non utilisées</p>
     </section>
 
-    <section id="vault" class="hidden">
-      <div class="toolbar">
-        <button id="newItem">Nouvel élément</button>
-        <input type="search" id="search" placeholder="Rechercher" />
-        <button id="quickLock">Verrouiller</button>
+    <section id="unlock" class="panel hidden">
+      <h2>Déverrouiller le coffre</h2>
+      <p>Entrez votre phrase secrète locale. Elle sert à dériver la clé maître de chiffrement. Elle n’est jamais envoyée au serveur.</p>
+      <div class="fields">
+        <input type="password" id="passphrase" placeholder="Phrase secrète" autocomplete="current-password" />
+        <button id="unlockBtn" class="btn accent">Déverrouiller</button>
+        <button id="createVaultBtn" class="btn" title="Crée ton coffre si c’est ta première connexion">Créer le coffre</button>
       </div>
+      <p class="muted">Astuce: utilisez une phrase longue, unique et mémorisable.</p>
+    </section>
 
-      <div id="list"></div>
-      <div id="editor" class="panel hidden"></div>
+    <section id="vault" class="panel hidden">
+      <div class="toolbar">
+        <button id="newItem" class="btn">Nouvel élément</button>
+        <button id="generator" class="btn">Générateur</button>
+        <input type="search" id="search" placeholder="Rechercher" />
+        <button id="quickLock" class="btn link">Verrouiller</button>
+      </div>
+      <div id="audit" class="audit muted"></div>
+      <div id="list" class="grid"></div>
+      <div id="editor" class="panel sub hidden"></div>
+      <div id="generatorPanel" class="panel sub hidden"></div>
     </section>
   </main>
+
+  <footer class="footer">
+    <nav class="legal-links">
+      <a href="legal.html">Mentions légales</a>
+      <a href="cgu.html">CGU</a>
+    </nav>
+    <div class="muted">Eagide — aucun cookie, aucune donnée personnelle exploitée, aucune monétisation directe ou indirecte.</div>
+  </footer>
 
   <script type="module" src="app.js"></script>
 </body>
